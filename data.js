@@ -6,7 +6,7 @@ export const postsData = [
         author: "John Doe",
         datepublished: "2023-09-20",
         category: "Mobile",
-        links: ["https://example.com/news1"],
+        links: ["https://example.com/newsflkfgfg1"],
         thumbnail: "https://images.pexels.com/photos/1616516/pexels-photo-1616516.jpeg",
     },
     {
