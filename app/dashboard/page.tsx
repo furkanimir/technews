@@ -1,11 +1,18 @@
 import Posts from "@/components/Posts"
 import { postsData } from "@/data"
 import Link from "next/link"
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        redirect('/sign-in');
+    }
     return (
         <div>
-            <h1>My Po2sts</h1>
+            <h1>My Dashboard</h1>
 
             {postsData && postsData.length > 0 ? (
                 postsData.map((post) => (<Posts key={post.id} id={post.id} author={post.author}
@@ -14,8 +21,8 @@ export default function Dashboard() {
                     title={post.title} content={post.content} links={post.links || []} />)
                 )) : (
                 <div className="py-6">
-                    No posts created. 
-                <Link className="underline" href={'/create-post'}>Create New Post</Link>
+                    No posts created.
+                    <Link className="underline" href={'/create-post'}>Create New Post</Link>
                 </div>
             )}
         </div>
