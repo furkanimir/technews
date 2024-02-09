@@ -55,7 +55,6 @@ export default function Navbar() {
                                 Logout!
                             </button>
                         </div>
-{/* 1:38:32 */}
                         <div className="flex gap-2 items-center">
                             <Link className="hidden md:flex gap-1 mr-6 text-green-500" href={'/create-post'}>
                                 <span>
