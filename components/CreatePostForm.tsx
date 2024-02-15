@@ -1,12 +1,35 @@
 'use client'
-
-import { categoriesData } from "@/data"
+//benimki.. . . 
+import { TCategory } from "@/app/types";
 import Link from "next/link";
-import { useState } from "react"
-//01:11:15
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation";
+
 export default function CreatePostForm() {
     const [links, setLinks] = useState<string[]>([]);
     const [linkInput, setLinkInput] = useState("");
+    const [title, setTitle] = useState("");
+    const [categories, setCategories] = useState<TCategory[]>([]);
+    const [content, setContent] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
+    const [publicId, setsetPublicId] = useState("");
+    const [error, setError] = useState("");
+
+
+    const router= useRouter();
+
+
+    useEffect(() => {
+        const fetchAllCategories = async () => {
+            const res = await fetch("api/categories");
+            const catNames = await res.json();
+            setCategories(catNames);
+        };
+
+        fetchAllCategories();
+
+    }, []);
 
     const addLink = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
@@ -18,14 +41,48 @@ export default function CreatePostForm() {
 
     const deleteLink = (index: number) => {
         setLinks((prev) => prev.filter((_, i) => i !== index));
-      };
+    };
+
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!title || !content) {
+            setError("buralar boş la");
+            return;
+        }
+
+        try {
+            const res = await fetch("api/posts/", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify({
+                    title,
+                    content,
+                    links,
+                    selectedCategory,
+                    imageUrl,
+                    publicId,
+                }),
+            });
+
+            if (res.ok) {
+                router.push("/dashboard");
+                router.refresh();
+            } else {
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <div>
             <h2>Create Post</h2>
-            <form className="flex flex-col gap-2">
-                <input type="text" placeholder="Title" />
-                <textarea placeholder="Content"></textarea>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+                <input onChange={e => setTitle(e.target.value)} type="text" placeholder="Title" />
+                <textarea onChange={e => setContent(e.target.value)} placeholder="Content"></textarea>
 
                 {links &&
                     links.map((link, i) =>
@@ -54,24 +111,28 @@ export default function CreatePostForm() {
                         placeholder="Pasta for links or opposites" />
                     <button onClick={addLink} className="btn flex gap-2 items-center">
                         <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
                         </span>
                         Add
                     </button>
                 </div>
 
-                <select className="p-3 rounded-md border appearance-none">
+                <select onChange={e => setSelectedCategory(e.target.value)} className="p-3 rounded-md border appearance-none">
                     <option value="">Select a category</option>
-                    {categoriesData &&
-                        categoriesData.map(category => (
-                            <option key={category.id} value={category.name}>{category.name}</option>
+                    {categories &&
+                        categories.map(category => (
+                            <option key={category.id} value={category.catName}>
+                                {category.catName}
+                            </option>
                         ))}
                 </select>
 
                 <button className="primary-btn" type="submit">Create Post</button>
-                <div className="p-2 text-red-500 font-bold">Error Message xd</div>
+
+                {error && <div className="p-2 text-red-500 font-bold">Error Message : {error}</div>}
+
             </form>
         </div>
     )

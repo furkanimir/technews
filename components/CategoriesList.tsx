@@ -1,14 +1,32 @@
-import {categoriesData } from '@/data'
-import Link from 'next/link'
 
-export default function CategoriesList() {
+import Link from 'next/link'
+import { TCategory } from '@/app/types';
+
+const getCategories = async (): Promise<TCategory[] | null > => {
+    try {
+        const res = await fetch(`${process.env.BASE_SITE_DOMAIN}/api/categories`);
+        if (res.ok) {
+            const categories = await res.json();
+            return categories;
+        }
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+    return null;
+
+};
+
+export default async function CategoriesList() {
+    const categories = await getCategories();
     return (
-    <div className='flex gap-2 text-sm flex-wrap' >
-        {categoriesData && categoriesData.map((category) => (
-            <Link
-            className='px-4 py-1 rounded-md bg-slate-800 text-white cursor-pointer'
-            href={`/categories/${category.name}`}> {category.name} </Link>
-        ))}
-    </div>
-  )
+        <div className='flex gap-2 text-sm flex-wrap' >
+            {categories && categories.map((category) => (
+                <Link
+                    key={category.id}
+                    className='px-4 py-1 rounded-md bg-slate-800 text-white cursor-pointer'
+                    href={`/categories/${category.catName}`}> {category.catName} </Link>
+            ))}
+        </div>
+    )
 }
