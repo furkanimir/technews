@@ -15,9 +15,9 @@ export async function POST(req: Request) {
     const { title, content, links, selectedCategory, imageUrl, publicId } =
         await req.json();
 
-    const authorEmail = 'frk.xw7@gmail.com'
+    const authorEmail = session?.user?.email as string;
 
-    if (!title || !content) {
+    if (!title || !content ) {
         return NextResponse.json(
             { error: "Title and content are required bruh." },
             { status: 500 }

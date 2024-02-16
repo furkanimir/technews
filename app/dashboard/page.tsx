@@ -1,4 +1,4 @@
-import Posts from "@/components/Posts"
+import Posts from "@/components/Post"
 import { postsData } from "@/data"
 import Link from "next/link"
 import { getServerSession } from "next-auth/next";

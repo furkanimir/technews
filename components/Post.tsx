@@ -4,6 +4,8 @@ import { link } from "fs";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteButton from "./DeleteButton";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 interface PostProps {
   id: string,
@@ -11,13 +13,13 @@ interface PostProps {
   authorEmail?: string,
   date: string,
   thumbnail?: string,
-  category: string,
+  category?: string,
   title: string,
   content: string,
   links?: string[]
 }
 
-export default function Posts({ id,
+export default async function Post({ id,
   author,
   authorEmail,
   date,
@@ -28,7 +30,9 @@ export default function Posts({ id,
   links
 }: PostProps) {
 
-  const isEditable = true;
+  const session = await getServerSession(authOptions);
+
+  const isEditable = session && session?.user?.email === authorEmail;
 
   return (
     <div className="my-4 border-b border-b-300 py-8">
