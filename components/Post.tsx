@@ -34,9 +34,17 @@ export default async function Post({ id,
 
   const isEditable = session && session?.user?.email === authorEmail;
 
+  const dateObj=new Date(date);
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    month:"long",
+    day:"numeric",
+    year:"numeric",
+  };
+  const formatedDate = dateObj.toLocaleDateString(undefined,dateOptions);
+
   return (
     <div className="my-4 border-b border-b-300 py-8">
-      <div className="mb-2">Posted by : <span className="font-bold font-orange-400">{author}</span> on {date} </div>
+      <div className="mb-2">Posted by : <span className="font-bold font-orange-400">{author}</span> on {formatedDate} </div>
       {/* resim divi */}
       <div className="w-full h-72 relative">
         {thumbnail ? (<Image src={thumbnail} alt="deneme" fill
