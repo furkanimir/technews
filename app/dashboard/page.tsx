@@ -34,7 +34,7 @@ export default async function Dashboard() {
             <h1>My Posts - Dashboard</h1>
 
             {posts && posts.length > 0 ? (
-                posts.map((post:TPost) => (<Posts key={post.id} id={post.id} author={"me"}
+                posts.map((post:TPost) => (<Posts key={post.id} id={post.id} author={""}
                     authorEmail={post.authorEmail} date={post.createdAt}
                     thumbnail={post.imageUrl} category={post.catName}
                     title={post.title} content={post.content} links={post.links || []} />)

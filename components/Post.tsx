@@ -34,17 +34,29 @@ export default async function Post({ id,
 
   const isEditable = session && session?.user?.email === authorEmail;
 
-  const dateObj=new Date(date);
+  const dateObj = new Date(date);
   const dateOptions: Intl.DateTimeFormatOptions = {
-    month:"long",
-    day:"numeric",
-    year:"numeric",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
   };
-  const formatedDate = dateObj.toLocaleDateString(undefined,dateOptions);
+  const formatedDate = dateObj.toLocaleDateString(undefined, dateOptions);
 
   return (
     <div className="my-4 border-b border-b-300 py-8">
-      <div className="mb-2">Posted by : <span className="font-bold font-orange-400">{author}</span> on {formatedDate} </div>
+      <div className="mb-2">
+        {author ?
+          (
+            <>
+              Posted by : <span className="font-bold font-orange-400">{author}</span> on {formatedDate}
+            </>
+          ) : (
+            <>
+              Posted on {formatedDate}
+            </>
+          )
+        }
+      </div>
       {/* resim divi */}
       <div className="w-full h-72 relative">
         {thumbnail ? (<Image src={thumbnail} alt="deneme" fill
@@ -59,9 +71,9 @@ export default async function Post({ id,
         <div className="my-4 flex flex-col gap-3" >
           {links.map((link, i) => (
             <div key={i} className="flex gap-2 items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
-                </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+              </svg>
               <Link className="link" href={link}>{link}</Link>
             </div>))}
         </div>
