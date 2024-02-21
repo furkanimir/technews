@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 
-const getpost = async (id: string): Promise<TPost | null> => {
+const getPost = async (id: string): Promise<TPost | null> => {
     try {
         const res = await fetch(`${process.env.NEXTAUTH_URL}/api/posts/${id}`, {
             cache: "no-cache",
@@ -28,8 +28,11 @@ export default async function EditPost({ params }: { params: { id: string } }) {
         redirect('/sign-in');
     }
     const id = params.id;
-    console.log("id: ",id);
+    console.log("id: ", id);
+    const post = await getPost(id);
     return (
-        <EditFormPost />
+        <>
+            {post ? <EditFormPost post={post} /> : <div>Invalid Post</div>}
+        </>
     )
 }
