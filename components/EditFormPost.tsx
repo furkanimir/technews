@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation";
 
-export default function EditPostForm({post}:{post:TPost}) {
+export default function EditPostForm({ post }: { post: TPost }) {
     const [links, setLinks] = useState<string[]>([]);
     const [linkInput, setLinkInput] = useState("");
     const [title, setTitle] = useState("");
@@ -13,11 +13,11 @@ export default function EditPostForm({post}:{post:TPost}) {
     const [content, setContent] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
     const [imageUrl, setImageUrl] = useState("");
-    const [publicId, setsetPublicId] = useState("");
+    const [publicId, setPublicId] = useState("");
     const [error, setError] = useState("");
 
 
-    const router= useRouter();
+    const router = useRouter();
 
 
     useEffect(() => {
@@ -29,7 +29,20 @@ export default function EditPostForm({post}:{post:TPost}) {
 
         fetchAllCategories();
 
-    }, []);
+        const initValues = () => {
+            setTitle(post.title);
+            setContent(post.content);
+            setImageUrl(post.imageUrl || "");
+            setPublicId(post.publicId || "");
+            setSelectedCategory(post.catName || "");
+            setLinks(post.links || []);
+          };
+      
+          initValues();
+
+        initValues();
+
+    }, [post.title, post.content, post.catName, post.imageUrl, post.publicId]);
 
     const addLink = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
@@ -52,8 +65,8 @@ export default function EditPostForm({post}:{post:TPost}) {
         }
 
         try {
-            const res = await fetch("api/posts/", {
-                method: "POST",
+            const res = await fetch(`/api/posts/${post.id}`, {
+                method: "PUT",
                 headers: {
                     "Content-type": "application/json",
                 },
@@ -79,10 +92,10 @@ export default function EditPostForm({post}:{post:TPost}) {
 
     return (
         <div>
-            <h2>Create Post</h2>
+            <h2>Update Post</h2>
             <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-                <input onChange={e => setTitle(e.target.value)} type="text" placeholder="Title" />
-                <textarea onChange={e => setContent(e.target.value)} placeholder="Content"></textarea>
+                <input value={title} onChange={e => setTitle(e.target.value)} type="text" placeholder="Title" />
+                <textarea value={content} onChange={e => setContent(e.target.value)} placeholder="Content"></textarea>
 
                 {links &&
                     links.map((link, i) =>
@@ -119,7 +132,11 @@ export default function EditPostForm({post}:{post:TPost}) {
                     </button>
                 </div>
 
-                <select onChange={e => setSelectedCategory(e.target.value)} className="p-3 rounded-md border appearance-none">
+                <select
+                    value={selectedCategory}
+                    onChange={e => setSelectedCategory(e.target.value)}
+                    className="p-3 rounded-md border appearance-none"
+                >
                     <option value="">Select a category</option>
                     {categories &&
                         categories.map(category => (
@@ -129,7 +146,7 @@ export default function EditPostForm({post}:{post:TPost}) {
                         ))}
                 </select>
 
-                <button className="primary-btn" type="submit">Create Post</button>
+                <button className="primary-btn" type="submit">Edit Post</button>
 
                 {error && <div className="p-2 text-red-500 font-bold">Error Message : {error}</div>}
 
