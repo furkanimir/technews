@@ -36,9 +36,9 @@ export default function EditPostForm({ post }: { post: TPost }) {
             setPublicId(post.publicId || "");
             setSelectedCategory(post.catName || "");
             setLinks(post.links || []);
-          };
-      
-          initValues();
+        };
+
+        initValues();
 
         initValues();
 
@@ -133,6 +133,20 @@ export default function EditPostForm({ post }: { post: TPost }) {
                 </div>
 
                 <select
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="p-3 rounded-md border appearance-none"
+                    value={selectedCategory}
+                >
+                    <option value="">Select A Category</option>
+                    {categories &&
+                        categories.map((category) => (
+                            <option key={category.id} value={category.catName}>
+                                {category.catName}
+                            </option>
+                        ))}
+                </select>
+
+                {/* <select
                     value={selectedCategory}
                     onChange={e => setSelectedCategory(e.target.value)}
                     className="p-3 rounded-md border appearance-none"
@@ -144,7 +158,7 @@ export default function EditPostForm({ post }: { post: TPost }) {
                                 {category.catName}
                             </option>
                         ))}
-                </select>
+                </select> */}
 
                 <button className="primary-btn" type="submit">Edit Post</button>
 
