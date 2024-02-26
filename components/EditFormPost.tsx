@@ -22,7 +22,7 @@ export default function EditPostForm({ post }: { post: TPost }) {
 
     useEffect(() => {
         const fetchAllCategories = async () => {
-            const res = await fetch("api/categories");
+            const res = await fetch("/api/categories");
             const catNames = await res.json();
             setCategories(catNames);
         };
@@ -39,11 +39,17 @@ export default function EditPostForm({ post }: { post: TPost }) {
         };
 
         initValues();
+        console.log(categories);
 
-        initValues();
 
-    }, [post.title, post.content, post.catName, post.imageUrl, post.publicId]);
-
+    }, [
+        post.title,
+        post.content,
+        post.imageUrl,
+        post.publicId,
+        post.catName,
+        post.links,
+    ]);
     const addLink = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         if (linkInput.trim() !== "") {
