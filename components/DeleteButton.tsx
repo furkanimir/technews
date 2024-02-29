@@ -2,6 +2,14 @@
 
 export default function DeleteButton({id}:{id:string}) {
 
+  const deleteImage = async (publicId:string) =>{
+    const res = await fetch(`/api/removeImage`,{
+      method:"POST",
+      headers:{"Content-Type": "application/json"},
+      body: JSON.stringify({publicId})
+    })
+  }
+
   const handleDelete = async () =>{
     const confirm = window.confirm("Are you sure ?");
 
@@ -14,8 +22,11 @@ export default function DeleteButton({id}:{id:string}) {
           },
         });
         if (res.ok) {
+          const post = await res.json();
+          const {publicId} = post;
+          await deleteImage(publicId);
           console.log("Post deleted");
-          window.location.reload();
+          // window.location.reload();
         }
       } catch (error) {
         console.log(error);
