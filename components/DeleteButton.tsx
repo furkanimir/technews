@@ -37,7 +37,7 @@ export default function DeleteButton({id}:{id:string}) {
       } catch (error) {
         toast.error("error");
         console.log(error);
-        return null;
+        // return null;
       }
     }
   }
