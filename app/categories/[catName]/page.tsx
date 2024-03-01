@@ -1,4 +1,5 @@
 import { TPost } from "@/app/types";
+import CategoriesList from "@/components/CategoriesList";
 import Post from "@/components/Post";
 
 const getPosts = async (catName: string): Promise<TPost[] | null> => {
@@ -31,7 +32,8 @@ export default async function CategoryPosts({
 
   return (
     <>
-      <h1>
+    <CategoriesList />
+      <h1 className="mt-5">
         <span className="font-normal">Categorty : </span> {decodeURIComponent(category)}
       </h1>
 

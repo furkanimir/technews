@@ -1,7 +1,11 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
 export default function DeleteButton({id}:{id:string}) {
 
+  const router = useRouter();
   const deleteImage = async (publicId:string) =>{
     const res = await fetch(`/api/removeImage`,{
       method:"POST",
@@ -26,9 +30,12 @@ export default function DeleteButton({id}:{id:string}) {
           const {publicId} = post;
           await deleteImage(publicId);
           console.log("Post deleted");
+          toast.success("Post deleted");
+          router.refresh();
           // window.location.reload();
         }
       } catch (error) {
+        toast.error("error");
         console.log(error);
         return null;
       }

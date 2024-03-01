@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation";
 import { CldUploadButton, CloudinaryUploadWidgetResults } from "next-cloudinary";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 export default function EditPostForm({ post }: { post: TPost }) {
     const [links, setLinks] = useState<string[]>([]);
@@ -68,7 +69,8 @@ export default function EditPostForm({ post }: { post: TPost }) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!title || !content) {
-            setError("buralar boş la");
+            // setError("buralar boş la");
+            toast.error("Title and content are requiredk");
             return;
         }
 
@@ -89,11 +91,13 @@ export default function EditPostForm({ post }: { post: TPost }) {
             });
 
             if (res.ok) {
+                toast.success("post editted ")
                 router.push("/dashboard");
                 router.refresh();
             } else {
             }
         } catch (error) {
+            toast.error("post not editted, something went wrongg.");
             console.log(error);
         }
     };
@@ -227,7 +231,7 @@ export default function EditPostForm({ post }: { post: TPost }) {
 
                 <button className="primary-btn" type="submit">Edit Post</button>
 
-                {error && <div className="p-2 text-red-500 font-bold">Error Message : {error}</div>}
+                {/* {error && <div className="p-2 text-red-500 font-bold">Error Message : {error}</div>} */}
 
             </form>
         </div>

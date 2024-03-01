@@ -1,11 +1,11 @@
 'use client'
-//benimki.. . . 
 import { TCategory } from "@/app/types";
 import Link from "next/link";
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation";
 import { CldUploadButton, CloudinaryUploadWidgetResults } from "next-cloudinary";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 export default function CreatePostForm() {
     const [links, setLinks] = useState<string[]>([]);
@@ -16,7 +16,7 @@ export default function CreatePostForm() {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [publicId, setPublicId] = useState("");
-    const [error, setError] = useState("");
+    // const [error, setError] = useState("");
 
 
     const router = useRouter();
@@ -63,7 +63,9 @@ export default function CreatePostForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!title || !content) {
-            setError("buralar boş la");
+            const errorMessage = "Title and content are requiredk";
+            toast.error(errorMessage);
+            // setError("buralar boş la");
             return;
         }
 
@@ -84,9 +86,12 @@ export default function CreatePostForm() {
             });
 
             if (res.ok) {
+                toast.success("post created.");
                 router.push("/dashboard");
                 router.refresh();
             } else {
+                toast.error("post cant created, something went wrongg.");
+
             }
         } catch (error) {
             console.log(error);
@@ -190,7 +195,7 @@ export default function CreatePostForm() {
 
                 <button className="primary-btn" type="submit">Create Post</button>
 
-                {error && <div className="p-2 text-red-500 font-bold">Error Message : {error}</div>}
+                {/* {error && <div className="p-2 text-red-500 font-bold">Error Message : {error}</div>} */}
 
             </form>
         </div>
