@@ -16,6 +16,7 @@ export default function CreatePostForm() {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [publicId, setPublicId] = useState("");
+    const [isCreating, setIsCreating] = useState(false);
     // const [error, setError] = useState("");
 
 
@@ -68,7 +69,7 @@ export default function CreatePostForm() {
             // setError("buralar boş la");
             return;
         }
-
+        setIsCreating(true);
         try {
             const res = await fetch("api/posts/", {
                 method: "POST",
@@ -95,6 +96,8 @@ export default function CreatePostForm() {
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsCreating(false);
         }
     };
 
@@ -193,7 +196,7 @@ export default function CreatePostForm() {
                         ))}
                 </select>
 
-                <button className="primary-btn" type="submit">Create Post</button>
+                <button className="primary-btn" disabled={isCreating} type="submit">Create Post</button>
 
                 {/* {error && <div className="p-2 text-red-500 font-bold">Error Message : {error}</div>} */}
 

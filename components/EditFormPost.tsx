@@ -17,7 +17,9 @@ export default function EditPostForm({ post }: { post: TPost }) {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [publicId, setPublicId] = useState("");
-    const [error, setError] = useState("");
+    // const [error, setError] = useState("");
+    const [isEditing, setIsEditing] = useState(false);
+
 
 
     const router = useRouter();
@@ -74,6 +76,7 @@ export default function EditPostForm({ post }: { post: TPost }) {
             return;
         }
 
+        setIsEditing(true);
         try {
             const res = await fetch(`/api/posts/${post.id}`, {
                 method: "PUT",
@@ -91,7 +94,7 @@ export default function EditPostForm({ post }: { post: TPost }) {
             });
 
             if (res.ok) {
-                toast.success("post editted ")
+                toast.success("post editted")
                 router.push("/dashboard");
                 router.refresh();
             } else {
@@ -99,6 +102,8 @@ export default function EditPostForm({ post }: { post: TPost }) {
         } catch (error) {
             toast.error("post not editted, something went wrongg.");
             console.log(error);
+        }finally {
+            setIsEditing(true);
         }
     };
 
@@ -229,7 +234,7 @@ export default function EditPostForm({ post }: { post: TPost }) {
                         ))}
                 </select> */}
 
-                <button className="primary-btn" type="submit">Edit Post</button>
+                <button className="primary-btn" disabled={isEditing} type="submit">Edit Post</button>
 
                 {/* {error && <div className="p-2 text-red-500 font-bold">Error Message : {error}</div>} */}
 

@@ -60,7 +60,7 @@ export default async function Post({ id,
       {/* resim divi */}
       <div className="w-full h-72 relative">
         {thumbnail ? (<Image src={thumbnail} alt="deneme" fill
-          className="object-cover rounded-md object-center" />) : (<Image src={"/1920x1080.jpg"} alt="deneme" fill
+          className="object-cover rounded-md object-center" />) : (<Image src={"/no-image.jpg"} alt="deneme" fill
             className="object-cover rounded-md object-center" />)}
       </div>
       {category && (<Link className="bg-slate-800 w-fit text-orange-100 px-2 py-0.5 rounded-md my-2 block" href={`/categories/${category}`}>{category}</Link>)}

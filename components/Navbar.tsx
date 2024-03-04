@@ -33,7 +33,7 @@ export default function Navbar() {
         <div className="flex justify-between border-b pb-3 mb-3 relative">
             <div className="">
                 <Link href={'/'} >
-                    <h1 className="text-dark text-4xl font-bold tracking-tighter">TechNews</h1>
+                    <h1 className="text-dark text-4xl font-bold tracking-tighter">TechForum</h1>
                 </Link>
                 <p className="text-sm">Cart curt burası <br />alt satırda fasafiso</p>
             </div>
