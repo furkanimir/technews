@@ -14,10 +14,6 @@ export const authOptions: AuthOptions = {
             clientId: process.env.GITHUB_CLIENT_ID as string,
             clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
         }),
-        GoogleProvider({
-            clientId: '1:18:40ta gugıl bağlantısını gösteriyor ona sonra bakarım',
-            clientSecret: '1:18:40ta gugıl bağlantısını gösteriyor ona sonra bakarım',
-        }),
     ],
     pages: {
         signIn: '/sign-in',
@@ -28,3 +24,8 @@ export const authOptions: AuthOptions = {
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST }
+
+// GoogleProvider({
+//     clientId: '',
+//     clientSecret: '',
+// }),
