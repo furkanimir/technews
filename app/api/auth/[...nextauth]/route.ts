@@ -1,9 +1,9 @@
-import { authOptions } from "@/app/utils/deneme";
+import authOptions from "@/app/utils/deneme";
 import NextAuth from "next-auth";
 
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST, authOptions };
+export { handler as GET, handler as POST };
 
 // import NextAuth, { AuthOptions } from "next-auth";
 // import GithubProvider from "next-auth/providers/github";
@@ -13,7 +13,7 @@ export { handler as GET, handler as POST, authOptions };
 // import prisma from "@/lib/prismadb";
 // import { Adapter } from "next-auth/adapters";
 
-// const authOptions: AuthOptions = {
+// export const authOptions: AuthOptions = {
 
 //     adapter: PrismaAdapter(prisma) as Adapter,
 //     providers: [
@@ -30,7 +30,7 @@ export { handler as GET, handler as POST, authOptions };
 
 // const handler = NextAuth(authOptions);
 
-// export { handler as GET, handler as POST, authOptions }
+// export { handler as GET, handler as POST }
 
 // GoogleProvider({
 //     clientId: '',
