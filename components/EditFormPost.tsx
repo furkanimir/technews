@@ -78,7 +78,7 @@ export default function EditPostForm({ post }: { post: TPost }) {
 
         setIsEditing(true);
         try {
-            const res = await fetch(`/api/posts/${post.id}`, {
+            const res = await fetch(`${process.env.NEXTAUTH_URL}/api/posts/${post.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-type": "application/json",

@@ -19,7 +19,7 @@ export default function DeleteButton({id}:{id:string}) {
 
     if(confirm){
       try {
-        const res = await fetch(`/api/posts/${id}`,{
+        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/posts/${id}`,{
           method:"DELETE",
           headers:{
             "Content-type":"application/json",
