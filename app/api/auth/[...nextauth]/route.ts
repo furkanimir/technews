@@ -1,9 +1,9 @@
-import { authOptions } from "@/app/utils/deneme";
+import authOptions from "@/app/utils/deneme";
 import NextAuth from "next-auth";
 
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST, authOptions };
+export { handler as GET, handler as POST };
 
 // import NextAuth, { AuthOptions } from "next-auth";
 // import GithubProvider from "next-auth/providers/github";
