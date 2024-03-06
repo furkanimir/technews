@@ -10,24 +10,24 @@ export default function Navbar() {
     const [isPopUpVisible, setIsPopUpVisible] = useState(false);
     const popupRef = useRef<HTMLDivElement | null>(null);
 
-    useEffect(()=>{
-        const handleClickOutside = (e:MouseEvent)=>{
-            if(popupRef.current && !popupRef.current.contains(e.target as Node)){
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (popupRef.current && !popupRef.current.contains(e.target as Node)) {
                 setIsPopUpVisible(false);
             }
         };
         document.addEventListener("click", handleClickOutside);
 
-        if(!isPopUpVisible){
+        if (!isPopUpVisible) {
             document.removeEventListener("click", handleClickOutside);
         }
 
-        return() =>{
+        return () => {
             document.removeEventListener("click", handleClickOutside);
-            
+
         }
 
-    },[isPopUpVisible])
+    }, [isPopUpVisible])
 
     return (
         <div className="flex justify-between border-b pb-3 mb-3 relative">
@@ -35,20 +35,22 @@ export default function Navbar() {
                 <Link href={'/'} >
                     <h1 className="text-dark text-4xl font-bold tracking-tighter">TechForum</h1>
                 </Link>
-                <p className="text-sm">Cart curt burası <br />alt satırda fasafiso</p>
+                {status === 'authenticated' ? (<p className="text-sm">Post atmak için giriş yapmalısınız <br />Şu anlık sadece Github hesabı ile giriş yapabilirsiniz </p>) : (<p className="text-sm">Güzel içeriklerini bekliyoruz</p>)}
+                {/* <p className="text-sm">Post atmak için giriş yapmalısınız <br />Şu anlık sadece Github hesabı ile giriş yapabilirsiniz </p> */}
+
             </div>
 
             {
                 status === 'authenticated' ? (
                     <>
-                    {/* pop-up div */}
+                        {/* pop-up div */}
                         <div ref={popupRef}
-                        className={`absolute z-30 right-0 top-20 bg-gradient-to-b from-white to-slate-100 p-6 shadow-lg
-                        rounded-md flex-col gap-2 text-right min-w-[160px] ${isPopUpVisible ? 'flex':'hidden'}`}>
+                            className={`absolute z-30 right-0 top-20 bg-gradient-to-b from-white to-slate-100 p-6 shadow-lg
+                        rounded-md flex-col gap-2 text-right min-w-[160px] ${isPopUpVisible ? 'flex' : 'hidden'}`}>
                             <div className="font-bold">{session?.user?.name} </div>
                             <div className="text-slate-400">{session?.user?.email} </div>
-                            <Link onClick={()=>setIsPopUpVisible(false)} className="hover:underline" href={'/dashboard'}>Dashboard</Link>
-                            <Link onClick={()=>setIsPopUpVisible(false)} className="hover:underline" href={'/create-post'}>Create Post</Link>
+                            <Link onClick={() => setIsPopUpVisible(false)} className="hover:underline" href={'/dashboard'}>Dashboard</Link>
+                            <Link onClick={() => setIsPopUpVisible(false)} className="hover:underline" href={'/create-post'}>Create Post</Link>
                             <button className="btn"
                                 onClick={() => signOut()}
                             >
@@ -70,7 +72,7 @@ export default function Navbar() {
                                 height={36}
                                 alt="pp"
                                 className="rounded-full cursor-pointer"
-                                onClick={()=>setIsPopUpVisible((prev) => !prev)}
+                                onClick={() => setIsPopUpVisible((prev) => !prev)}
                             />
 
                         </div>
