@@ -35,7 +35,7 @@ export default function Navbar() {
                 <Link href={'/'} >
                     <h1 className="text-dark text-4xl font-bold tracking-tighter">TechForum</h1>
                 </Link>
-                {status === 'authenticated' ? (<p className="text-sm">Post atmak için giriş yapmalısınız <br />Şu anlık sadece Github hesabı ile giriş yapabilirsiniz </p>) : (<p className="text-sm">Güzel içeriklerini bekliyoruz</p>)}
+                {status === 'authenticated' ? (<p className="text-sm">Güzel içeriklerini bekliyoruz</p>) : (<p className="text-sm">Post atmak için giriş yapmalısınız <br />Şu anlık Github hesabı ile giriş yapabilirsiniz </p>)}
                 {/* <p className="text-sm">Post atmak için giriş yapmalısınız <br />Şu anlık sadece Github hesabı ile giriş yapabilirsiniz </p> */}
 
             </div>
